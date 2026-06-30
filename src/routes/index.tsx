@@ -206,7 +206,7 @@ function CheerUpPage() {
           className="mx-auto max-w-xl text-center"
         >
           <h2 className="mb-2 text-2xl font-bold text-foreground sm:text-3xl">
-            Real talk: how you feelin&apos;?
+            Real talk: how you feeling?
           </h2>
           <p className="mb-6 text-muted-foreground">
             Be honest. The cats are listening.
@@ -294,9 +294,9 @@ function CheerUpPage() {
                   You rebel. I like you, Reanna.
                 </p>
                 <p className="mt-2 text-muted-foreground">
-                  Here&apos;s your reward: you are objectively amazing, and this sickness is temporary.
+                  Here is your reward: you are objectively amazing, and this sickness is temporary.
                   Your comeback energy is going to be UNHINGED.
-                  The world isn&apos;t ready. Rest up, legend.
+                  The world is not ready. Rest up, legend.
                 </p>
               </motion.div>
             )}
