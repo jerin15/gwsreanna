@@ -291,11 +291,11 @@ function CheerUpPage() {
                 className="mt-6 rounded-2xl bg-card p-6 shadow-sm"
               >
                 <p className="text-lg font-bold text-foreground">
-                  You rebel. I like you.
+                  You rebel. I like you, Reanna.
                 </p>
                 <p className="mt-2 text-muted-foreground">
-                  Here&apos;s your reward: you are objectively amazing, and this sickness is temporary. 
-                  Your comeback energy is going to be UNHINGED. 
+                  Here&apos;s your reward: you are objectively amazing, and this sickness is temporary.
+                  Your comeback energy is going to be UNHINGED.
                   The world isn&apos;t ready. Rest up, legend.
                 </p>
               </motion.div>
