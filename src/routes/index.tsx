@@ -46,18 +46,18 @@ interface MoodResponse {
 const moodResponses: Record<string, MoodResponse> = {
   sad: {
     image: catShock,
-    message: "Aww, you poor thing",
+    message: "Aww, Reanna, you poor thing",
     subtext: "It's okay to feel bad. But also: your cat memes miss you and want you back at full strength.",
   },
   okay: {
     image: catLoaf,
-    message: "Okay is progress!",
+    message: "Okay is progress, Reanna!",
     subtext: "You're in loaf mode now. Soon you'll be zoomies mode. Patience, young padawan.",
   },
   surviving: {
     image: catStretch,
     message: "Tired but tolerating existence?",
-    subtext: "That's basically the adult experience. You're nailing it. Gold star for still being here.",
+    subtext: "That's basically the adult experience, Reanna. You're nailing it. Gold star for still being here.",
   },
 };
 
@@ -118,8 +118,8 @@ function CheerUpPage() {
             transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
           />
           <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
-            Sending you{" "}
-            <span className="text-coral">purr-fect</span> healing vibes
+            Sending{" "}
+            <span className="text-coral">Reanna</span> purr-fect healing vibes
           </h1>
           <p className="mt-4 text-lg text-muted-foreground">
             This page is scientifically proven* to improve mood by at least 47%
@@ -291,11 +291,11 @@ function CheerUpPage() {
                 className="mt-6 rounded-2xl bg-card p-6 shadow-sm"
               >
                 <p className="text-lg font-bold text-foreground">
-                  You rebel. I like you.
+                  You rebel. I like you, Reanna.
                 </p>
                 <p className="mt-2 text-muted-foreground">
-                  Here&apos;s your reward: you are objectively amazing, and this sickness is temporary. 
-                  Your comeback energy is going to be UNHINGED. 
+                  Here&apos;s your reward: you are objectively amazing, and this sickness is temporary.
+                  Your comeback energy is going to be UNHINGED.
                   The world isn&apos;t ready. Rest up, legend.
                 </p>
               </motion.div>
@@ -311,9 +311,7 @@ function CheerUpPage() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
         >
-          <p className="text-2xl font-bold text-foreground">
-            Get well soon, you incredible human 🧡
-          </p>
+            Get well soon, <span className="text-coral">Reanna</span> — you incredible human 🧡
           <p className="mt-2 text-sm text-muted-foreground">
             Made with excessive cat energy and genuine concern
           </p>
