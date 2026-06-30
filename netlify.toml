@@ -1,3 +1,10 @@
 [build]
-  command = "vite build"
-  publish = "dist/client"
+command = "bun run build"
+publish = "dist"
+
+[functions]
+directory = "netlify/functions"
+
+[build.environment]
+BUN_VERSION = "1.1.0"
+NODE_VERSION = "18"
