@@ -29,9 +29,9 @@ interface CatCardData {
 }
 
 const catCards: CatCardData[] = [
-  { id: 1, image: catJudge, caption: "when you say you're fine but we both know", reaction: "I see through your lies. Rest. Now." },
-  { id: 2, image: catStretch, caption: "me pretending my immune system is a gym bro", reaction: "That's the spirit! Flex on those germs!" },
-  { id: 3, image: catShock, caption: "me checking my temperature for the 47th time", reaction: "It's okay, we all do it. The thermometer is now your personality." },
+  { id: 1, image: catJudge, caption: "when you say you are fine but we both know", reaction: "I see through your lies. Rest. Now." },
+  { id: 2, image: catStretch, caption: "me pretending my immune system is a gym bro", reaction: "That is the spirit! Flex on those germs!" },
+  { id: 3, image: catShock, caption: "me checking my temperature for the 47th time", reaction: "It is okay, we all do it. The thermometer is now your personality." },
   { id: 4, image: catLoaf, caption: "my current energy level: bread", reaction: "Loaf mode activated. Zero obligations. Maximum cozy." },
   { id: 5, image: catPeek, caption: "me watching my friends have fun without me", reaction: "FOMO is temporary. Your comeback will be legendary." },
   { id: 6, image: catHero, caption: "you in 3 days (manifesting)", reaction: "Visualize it. The cozy blanket era is ending soon." },
@@ -47,17 +47,17 @@ const moodResponses: Record<string, MoodResponse> = {
   sad: {
     image: catShock,
     message: "Aww, Reanna, you poor thing",
-    subtext: "It's okay to feel bad. But also: your cat memes miss you and want you back at full strength.",
+    subtext: "It is okay to feel bad. But also: your cat memes miss you and want you back at full strength.",
   },
   okay: {
     image: catLoaf,
     message: "Okay is progress, Reanna!",
-    subtext: "You're in loaf mode now. Soon you'll be zoomies mode. Patience, young padawan.",
+    subtext: "You are in loaf mode now. Soon you will be zoomies mode. Patience, young padawan.",
   },
   surviving: {
     image: catStretch,
     message: "Tired but tolerating existence?",
-    subtext: "That's basically the adult experience, Reanna. You're nailing it. Gold star for still being here.",
+    subtext: "That is basically the adult experience, Reanna. You are nailing it. Gold star for still being here.",
   },
 };
 
@@ -119,7 +119,7 @@ function CheerUpPage() {
           />
           <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
             Sending{" "}
-            <span className="text-coral">Reanna</span> purr-fect healing vibes
+            <span className="text-coral">Reanna</span> perfect healing vibes
           </h1>
           <p className="mt-4 text-lg text-muted-foreground">
             This page is scientifically proven* to improve mood by at least 47%
@@ -206,7 +206,7 @@ function CheerUpPage() {
           className="mx-auto max-w-xl text-center"
         >
           <h2 className="mb-2 text-2xl font-bold text-foreground sm:text-3xl">
-            Real talk: how you feelin&apos;?
+            Real talk: how you feeling?
           </h2>
           <p className="mb-6 text-muted-foreground">
             Be honest. The cats are listening.
@@ -294,9 +294,9 @@ function CheerUpPage() {
                   You rebel. I like you, Reanna.
                 </p>
                 <p className="mt-2 text-muted-foreground">
-                  Here&apos;s your reward: you are objectively amazing, and this sickness is temporary.
+                  Here is your reward: you are objectively amazing, and this sickness is temporary.
                   Your comeback energy is going to be UNHINGED.
-                  The world isn&apos;t ready. Rest up, legend.
+                  The world is not ready. Rest up, legend.
                 </p>
               </motion.div>
             )}
