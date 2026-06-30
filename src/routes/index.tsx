@@ -311,9 +311,7 @@ function CheerUpPage() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
         >
-          <p className="text-2xl font-bold text-foreground">
-            Get well soon, you incredible human 🧡
-          </p>
+            Get well soon, <span className="text-coral">Reanna</span> — you incredible human 🧡
           <p className="mt-2 text-sm text-muted-foreground">
             Made with excessive cat energy and genuine concern
           </p>
