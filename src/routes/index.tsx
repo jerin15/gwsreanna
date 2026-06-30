@@ -118,8 +118,8 @@ function CheerUpPage() {
             transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
           />
           <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
-            Sending you{" "}
-            <span className="text-coral">purr-fect</span> healing vibes
+            Sending{" "}
+            <span className="text-coral">Reanna</span> purr-fect healing vibes
           </h1>
           <p className="mt-4 text-lg text-muted-foreground">
             This page is scientifically proven* to improve mood by at least 47%
