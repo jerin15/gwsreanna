@@ -46,18 +46,18 @@ interface MoodResponse {
 const moodResponses: Record<string, MoodResponse> = {
   sad: {
     image: catShock,
-    message: "Aww, you poor thing",
+    message: "Aww, Reanna, you poor thing",
     subtext: "It's okay to feel bad. But also: your cat memes miss you and want you back at full strength.",
   },
   okay: {
     image: catLoaf,
-    message: "Okay is progress!",
+    message: "Okay is progress, Reanna!",
     subtext: "You're in loaf mode now. Soon you'll be zoomies mode. Patience, young padawan.",
   },
   surviving: {
     image: catStretch,
     message: "Tired but tolerating existence?",
-    subtext: "That's basically the adult experience. You're nailing it. Gold star for still being here.",
+    subtext: "That's basically the adult experience, Reanna. You're nailing it. Gold star for still being here.",
   },
 };
 
