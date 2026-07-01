@@ -144,6 +144,37 @@ function CheerUpPage() {
   const [cozyMode, setCozyMode] = useState(false);
   const [petCount, setPetCount] = useState(0);
   const [prescriptionOpen, setPrescriptionOpen] = useState(false);
+  const [complimentSeed, setComplimentSeed] = useState(0);
+  const [complimentCount, setComplimentCount] = useState(1);
+  const [bubbles, setBubbles] = useState<{ id: number; x: number; emoji: string }[]>([]);
+  const [bubbleTotal, setBubbleTotal] = useState(0);
+  const [meowQuestion, setMeowQuestion] = useState("");
+  const [meowAnswer, setMeowAnswer] = useState<string | null>(null);
+  const [meowShaking, setMeowShaking] = useState(false);
+
+  const pick = <T,>(arr: T[]) => arr[Math.floor(Math.random() * arr.length)];
+  const currentCompliment = (() => {
+    // seed dependency keeps this recomputed on button press
+    void complimentSeed;
+    return `Reanna, you are ${pick(complimentAdjectives)} — a truly ${pick(complimentAdjectives)} ${pick(complimentNouns)}, ${pick(complimentClosers)}`;
+  })();
+
+  const spawnBubble = () => {
+    const emojis = ["🐱", "😺", "😻", "🐾", "💛", "✨", "🧡", "💫", "🌸", "🫧"];
+    const id = bubbleTotal + 1;
+    setBubbleTotal(id);
+    setBubbles((b) => [...b, { id, x: Math.random() * 90 + 5, emoji: pick(emojis) }]);
+    setTimeout(() => setBubbles((b) => b.filter((x) => x.id !== id)), 3500);
+  };
+
+  const askMeowBall = () => {
+    setMeowShaking(true);
+    setTimeout(() => {
+      setMeowAnswer(pick(meowBallAnswers));
+      setMeowShaking(false);
+    }, 700);
+  };
+
 
   const handleSurprise = useCallback(async () => {
     setSurpriseTriggered(true);
