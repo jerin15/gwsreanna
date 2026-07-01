@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { motion, AnimatePresence } from "motion/react";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 
 import catHero from "../assets/cat-hero.jpg";
 import catJudge from "../assets/cat-judge.jpg";
@@ -12,9 +12,9 @@ import catPeek from "../assets/cat-peek.jpg";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Feel Better Soon!" },
+      { title: "Feel Better Soon, Reanna!" },
       { name: "description", content: "A little something to make you smile and feel better." },
-      { property: "og:title", content: "Feel Better Soon!" },
+      { property: "og:title", content: "Feel Better Soon, Reanna!" },
       { property: "og:description", content: "A little something to make you smile and feel better." },
     ],
   }),
@@ -61,10 +61,51 @@ const moodResponses: Record<string, MoodResponse> = {
   },
 };
 
+const catPuns = [
+  "You have got to be kitten me, Reanna. Get well soon!",
+  "This whole situation is unfurtunate. Purrhaps some rest will help.",
+  "You are feline down today, but tomorrow you will be pawsome.",
+  "Stay pawsitive. You are litterally the best.",
+  "Do not let this sickness catch you off guard. You have got claws.",
+  "I am not kitten around: you are the cat's whiskers.",
+  "Time to paws and recover. The world can meownage without you for a day.",
+  "You are one clever kitty. This bug does not stand a chance.",
+];
+
+const catJokes = [
+  { q: "What do you call a cat that gets anything it wants?", a: "Purrsuasive." },
+  { q: "Why was the cat sitting on the computer?", a: "To keep an eye on the mouse." },
+  { q: "What is a cat's favorite dessert?", a: "Chocolate mouse." },
+  { q: "How do cats end a fight?", a: "They hiss and make up." },
+  { q: "What do cats eat for breakfast?", a: "Mice Krispies." },
+  { q: "Why do cats always get their way?", a: "They are very purrsuasive negotiators." },
+];
+
+const catFactsSerious = [
+  "Cats sleep 12 to 16 hours a day. You are doing something right by resting.",
+  "A cat's purr vibrates at a frequency that can help heal bones and tissue. Get a cat. Or imagine one.",
+  "Cats have 32 muscles in each ear. Yours only need to hear one thing: you will be okay.",
+  "A group of cats is called a clowder. A group of Reannas is called a national treasure.",
+];
+
+const catFactsFake = [
+  "Cats invented the internet in 2003. This is why they own it.",
+  "The average cat can bench press 4 grapes. Do not test this.",
+  "Studies show that saying meow three times cures 12 percent of colds. Reanna, try it.",
+  "Cats can legally vote in 3 countries. None of them are real.",
+];
+
 function CheerUpPage() {
   const [activeCard, setActiveCard] = useState<number | null>(null);
   const [selectedMood, setSelectedMood] = useState<string | null>(null);
   const [surpriseTriggered, setSurpriseTriggered] = useState(false);
+  const [punIndex, setPunIndex] = useState(0);
+  const [jokeIndex, setJokeIndex] = useState(0);
+  const [punchlineShown, setPunchlineShown] = useState(false);
+  const [seriousMode, setSeriousMode] = useState(true);
+  const [cozyMode, setCozyMode] = useState(false);
+  const [petCount, setPetCount] = useState(0);
+  const [prescriptionOpen, setPrescriptionOpen] = useState(false);
 
   const handleSurprise = useCallback(async () => {
     setSurpriseTriggered(true);
@@ -98,8 +139,49 @@ function CheerUpPage() {
     frame();
   }, []);
 
+  const nextPun = () => setPunIndex((i) => (i + 1) % catPuns.length);
+  const nextJoke = () => {
+    setJokeIndex((i) => (i + 1) % catJokes.length);
+    setPunchlineShown(false);
+  };
+
+  const petCat = useCallback(async () => {
+    setPetCount((c) => c + 1);
+    if ((petCount + 1) % 10 === 0) {
+      const confetti = (await import("canvas-confetti")).default;
+      confetti({
+        particleCount: 50,
+        spread: 70,
+        origin: { y: 0.6 },
+        colors: ["#ff7a6b", "#ffd700", "#ff6b9d"],
+      });
+    }
+  }, [petCount]);
+
+  useEffect(() => {
+    document.documentElement.classList.toggle("dark", cozyMode);
+  }, [cozyMode]);
+
+  const facts = seriousMode ? catFactsSerious : catFactsFake;
+
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background transition-colors duration-500">
+      {/* Cozy mode toggle */}
+      <div className="fixed top-4 right-4 z-50 flex items-center gap-2 rounded-full bg-card/80 px-3 py-2 shadow backdrop-blur">
+        <span className="text-xs font-semibold">{cozyMode ? "🌙 Blanket Fort" : "☀️ Daytime"}</span>
+        <button
+          onClick={() => setCozyMode((v) => !v)}
+          className={`relative h-6 w-11 rounded-full transition-colors ${cozyMode ? "bg-coral" : "bg-muted"}`}
+          aria-label="Toggle cozy mode"
+        >
+          <motion.span
+            className="absolute top-0.5 left-0.5 h-5 w-5 rounded-full bg-white shadow"
+            animate={{ x: cozyMode ? 20 : 0 }}
+            transition={{ type: "spring", stiffness: 500, damping: 30 }}
+          />
+        </button>
+      </div>
+
       {/* Hero */}
       <section className="relative flex flex-col items-center justify-center px-4 pt-12 pb-8 text-center sm:pt-20 sm:pb-12">
         <motion.div
@@ -110,7 +192,7 @@ function CheerUpPage() {
         >
           <motion.img
             src={catHero}
-            alt="Sleepy cute cat"
+            alt="Sleepy cute grey cat"
             width={280}
             height={280}
             className="mx-auto mb-6 rounded-3xl"
@@ -122,9 +204,48 @@ function CheerUpPage() {
             <span className="text-coral">Reanna</span> perfect healing vibes
           </h1>
           <p className="mt-4 text-lg text-muted-foreground">
-            This page is scientifically proven* to improve mood by at least 47%
+            This page is scientifically proven* to improve mood by at least 47 percent
           </p>
           <p className="mt-1 text-xs text-muted-foreground/60">*not actually scientific, but still true</p>
+        </motion.div>
+      </section>
+
+      {/* Pet the cat counter */}
+      <section className="px-4 py-8 sm:py-12">
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="mx-auto max-w-md rounded-3xl bg-card p-6 text-center shadow-sm"
+        >
+          <h2 className="mb-2 text-2xl font-bold text-foreground">Pet the cat</h2>
+          <p className="mb-4 text-sm text-muted-foreground">
+            Clinically proven to release serotonin. Also fun.
+          </p>
+          <motion.button
+            onClick={petCat}
+            whileTap={{ scale: 0.9, rotate: -5 }}
+            className="mx-auto block"
+          >
+            <motion.img
+              src={catLoaf}
+              alt="A grey loaf cat waiting for pets"
+              className="mx-auto h-40 w-40 rounded-2xl object-contain"
+              animate={petCount > 0 ? { rotate: [0, -3, 3, 0] } : {}}
+              transition={{ duration: 0.4 }}
+              key={petCount}
+              width={512}
+              height={512}
+            />
+          </motion.button>
+          <p className="mt-4 text-lg font-bold text-coral">
+            {petCount === 0 ? "Give this loaf a pet" : `${petCount} pet${petCount === 1 ? "" : "s"} delivered`}
+          </p>
+          {petCount >= 10 && (
+            <p className="mt-1 text-sm text-muted-foreground">
+              Purr level: maximum. Cat is now yours forever.
+            </p>
+          )}
         </motion.div>
       </section>
 
@@ -196,6 +317,97 @@ function CheerUpPage() {
         </motion.div>
       </section>
 
+      {/* Pun generator */}
+      <section className="px-4 py-8 sm:py-12">
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="mx-auto max-w-xl text-center"
+        >
+          <h2 className="mb-2 text-2xl font-bold text-foreground sm:text-3xl">
+            The Purr Generator
+          </h2>
+          <p className="mb-6 text-muted-foreground">
+            Warning: side effects include eye rolls and reluctant smiles.
+          </p>
+          <div className="rounded-3xl bg-peach/40 p-6 shadow-sm">
+            <AnimatePresence mode="wait">
+              <motion.p
+                key={punIndex}
+                initial={{ opacity: 0, y: 10, rotate: -2 }}
+                animate={{ opacity: 1, y: 0, rotate: 0 }}
+                exit={{ opacity: 0, y: 10 }}
+                className="text-xl font-bold text-foreground"
+              >
+                {catPuns[punIndex]}
+              </motion.p>
+            </AnimatePresence>
+          </div>
+          <motion.button
+            onClick={nextPun}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="mt-4 rounded-full bg-coral px-6 py-3 text-sm font-semibold text-white shadow"
+          >
+            Hit me with another pun 🐾
+          </motion.button>
+        </motion.div>
+      </section>
+
+      {/* Joke card */}
+      <section className="px-4 py-8 sm:py-12">
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="mx-auto max-w-xl"
+        >
+          <h2 className="mb-2 text-center text-2xl font-bold text-foreground sm:text-3xl">
+            The Joke Box
+          </h2>
+          <p className="mb-6 text-center text-muted-foreground">
+            Tap to reveal. Groan responsibly.
+          </p>
+          <motion.div
+            className="rounded-3xl bg-card p-6 shadow-sm"
+            key={jokeIndex}
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+          >
+            <p className="text-lg font-semibold text-foreground">
+              {catJokes[jokeIndex].q}
+            </p>
+            <AnimatePresence>
+              {punchlineShown && (
+                <motion.p
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: "auto" }}
+                  exit={{ opacity: 0, height: 0 }}
+                  className="mt-3 text-lg font-bold text-coral"
+                >
+                  {catJokes[jokeIndex].a}
+                </motion.p>
+              )}
+            </AnimatePresence>
+            <div className="mt-4 flex gap-2">
+              <button
+                onClick={() => setPunchlineShown((v) => !v)}
+                className="flex-1 rounded-xl bg-blush px-4 py-2 text-sm font-semibold text-foreground hover:bg-blush/80"
+              >
+                {punchlineShown ? "Hide punchline" : "Reveal punchline"}
+              </button>
+              <button
+                onClick={nextJoke}
+                className="flex-1 rounded-xl bg-peach px-4 py-2 text-sm font-semibold text-foreground hover:bg-peach/80"
+              >
+                Next joke →
+              </button>
+            </div>
+          </motion.div>
+        </motion.div>
+      </section>
+
       {/* Mood Picker */}
       <section className="px-4 py-8 sm:py-12">
         <motion.div
@@ -259,6 +471,102 @@ function CheerUpPage() {
         </motion.div>
       </section>
 
+      {/* Fact toggle */}
+      <section className="px-4 py-8 sm:py-12">
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="mx-auto max-w-xl"
+        >
+          <div className="mb-4 flex items-center justify-center gap-3">
+            <h2 className="text-2xl font-bold text-foreground sm:text-3xl">
+              Cat Facts
+            </h2>
+          </div>
+          <div className="mb-6 flex justify-center gap-2">
+            <button
+              onClick={() => setSeriousMode(true)}
+              className={`rounded-full px-4 py-2 text-sm font-semibold transition-colors ${seriousMode ? "bg-coral text-white" : "bg-muted text-muted-foreground"}`}
+            >
+              🧠 Real facts
+            </button>
+            <button
+              onClick={() => setSeriousMode(false)}
+              className={`rounded-full px-4 py-2 text-sm font-semibold transition-colors ${!seriousMode ? "bg-coral text-white" : "bg-muted text-muted-foreground"}`}
+            >
+              🤥 Fake facts
+            </button>
+          </div>
+          <AnimatePresence mode="wait">
+            <motion.ul
+              key={seriousMode ? "serious" : "fake"}
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -20 }}
+              className="space-y-3"
+            >
+              {facts.map((fact, i) => (
+                <motion.li
+                  key={i}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: i * 0.08 }}
+                  className="rounded-2xl bg-card px-4 py-3 text-foreground shadow-sm"
+                >
+                  <span className="mr-2 text-coral font-bold">🐾</span>
+                  {fact}
+                </motion.li>
+              ))}
+            </motion.ul>
+          </AnimatePresence>
+        </motion.div>
+      </section>
+
+      {/* Prescription */}
+      <section className="px-4 py-8 sm:py-12">
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="mx-auto max-w-md"
+        >
+          <div className="relative rounded-3xl border-2 border-dashed border-coral/40 bg-cream p-6 shadow-sm">
+            <div className="mb-3 flex items-center justify-between">
+              <span className="text-xs font-bold uppercase tracking-widest text-coral">
+                Dr. Whiskers, MD
+              </span>
+              <span className="text-xs text-muted-foreground">Prescription</span>
+            </div>
+            <p className="text-sm text-muted-foreground">Patient: Reanna</p>
+            <p className="mt-1 text-sm text-muted-foreground">Diagnosis: temporary human malfunction</p>
+            <button
+              onClick={() => setPrescriptionOpen((v) => !v)}
+              className="mt-4 w-full rounded-xl bg-coral px-4 py-3 text-sm font-semibold text-white"
+            >
+              {prescriptionOpen ? "Close prescription" : "Open prescription"}
+            </button>
+            <AnimatePresence>
+              {prescriptionOpen && (
+                <motion.ul
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: "auto" }}
+                  exit={{ opacity: 0, height: 0 }}
+                  className="mt-4 space-y-2 overflow-hidden text-sm text-foreground"
+                >
+                  <li>💊 One (1) nap, taken as needed. Refills unlimited.</li>
+                  <li>🍜 One warm bowl of soup. Any soup. No wrong soup.</li>
+                  <li>📺 Two episodes of comfort show. Not the sad one.</li>
+                  <li>🫖 Tea, honey, and zero guilt about being unproductive.</li>
+                  <li>🐈 Approximately 47 imaginary cat cuddles.</li>
+                  <li>📵 Doom scrolling: strictly forbidden. Doctor is watching.</li>
+                </motion.ul>
+              )}
+            </AnimatePresence>
+          </div>
+        </motion.div>
+      </section>
+
       {/* Surprise Button */}
       <section className="px-4 py-8 sm:py-12">
         <motion.div
@@ -311,7 +619,9 @@ function CheerUpPage() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
         >
-            Get well soon, <span className="text-coral">Reanna</span> — you incredible human 🧡
+          <p className="text-lg font-semibold text-foreground">
+            Get well soon, <span className="text-coral">Reanna</span>, you incredible human 🧡
+          </p>
           <p className="mt-2 text-sm text-muted-foreground">
             Made with excessive cat energy and genuine concern
           </p>
