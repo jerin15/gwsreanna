@@ -95,6 +95,44 @@ const catFactsFake = [
   "Cats can legally vote in 3 countries. None of them are real.",
 ];
 
+const complimentAdjectives = [
+  "unreasonably brilliant", "cosmically kind", "suspiciously talented", "outrageously funny",
+  "chaotically wise", "absurdly capable", "unfairly stylish", "genuinely magical",
+  "wildly loveable", "quietly powerful", "delightfully unhinged", "impossibly cool",
+  "radiantly weird", "criminally underrated", "iconically kind", "supernaturally chill",
+];
+const complimentNouns = [
+  "human", "legend", "vibe", "genius", "sunbeam", "chaos goblin", "menace to sadness",
+  "cryptid", "certified icon", "walking serotonin", "small warm sun", "problem solver",
+  "friend of cats", "storm in a teacup", "living plot twist",
+];
+const complimentClosers = [
+  "and honestly, the world knows it.",
+  "and I will fight anyone who disagrees.",
+  "the data is overwhelming.",
+  "the cats have signed a petition confirming this.",
+  "science cannot explain it.",
+  "sources: everyone with eyes.",
+  "even your immune system agrees, it is just buffering.",
+  "case closed, your honor.",
+];
+
+const meowBallAnswers = [
+  "Meow. (That is a yes.)",
+  "Absolutely, and twice on Sundays.",
+  "The cats say: nap first, decide later.",
+  "Signs point to yes. Also snacks.",
+  "Ask again after tea.",
+  "Hard no. The vibes are off.",
+  "Yes, but only if you smile while doing it.",
+  "The universe says: rest, then conquer.",
+  "Reanna, you already know the answer.",
+  "100 percent. The council of loafs has spoken.",
+  "Try again, this time with more confidence.",
+  "Purrhaps. The stars are still loading.",
+];
+
+
 function CheerUpPage() {
   const [activeCard, setActiveCard] = useState<number | null>(null);
   const [selectedMood, setSelectedMood] = useState<string | null>(null);
@@ -106,6 +144,37 @@ function CheerUpPage() {
   const [cozyMode, setCozyMode] = useState(false);
   const [petCount, setPetCount] = useState(0);
   const [prescriptionOpen, setPrescriptionOpen] = useState(false);
+  const [complimentSeed, setComplimentSeed] = useState(0);
+  const [complimentCount, setComplimentCount] = useState(1);
+  const [bubbles, setBubbles] = useState<{ id: number; x: number; emoji: string }[]>([]);
+  const [bubbleTotal, setBubbleTotal] = useState(0);
+  const [meowQuestion, setMeowQuestion] = useState("");
+  const [meowAnswer, setMeowAnswer] = useState<string | null>(null);
+  const [meowShaking, setMeowShaking] = useState(false);
+
+  const pick = <T,>(arr: T[]) => arr[Math.floor(Math.random() * arr.length)];
+  const currentCompliment = (() => {
+    // seed dependency keeps this recomputed on button press
+    void complimentSeed;
+    return `Reanna, you are ${pick(complimentAdjectives)} — a truly ${pick(complimentAdjectives)} ${pick(complimentNouns)}, ${pick(complimentClosers)}`;
+  })();
+
+  const spawnBubble = () => {
+    const emojis = ["🐱", "😺", "😻", "🐾", "💛", "✨", "🧡", "💫", "🌸", "🫧"];
+    const id = bubbleTotal + 1;
+    setBubbleTotal(id);
+    setBubbles((b) => [...b, { id, x: Math.random() * 90 + 5, emoji: pick(emojis) }]);
+    setTimeout(() => setBubbles((b) => b.filter((x) => x.id !== id)), 3500);
+  };
+
+  const askMeowBall = () => {
+    setMeowShaking(true);
+    setTimeout(() => {
+      setMeowAnswer(pick(meowBallAnswers));
+      setMeowShaking(false);
+    }, 700);
+  };
+
 
   const handleSurprise = useCallback(async () => {
     setSurpriseTriggered(true);
@@ -611,6 +680,171 @@ function CheerUpPage() {
           </AnimatePresence>
         </motion.div>
       </section>
+
+      {/* Endless Compliment Machine */}
+      <section className="px-4 py-8 sm:py-12">
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="mx-auto max-w-xl text-center"
+        >
+          <h2 className="mb-2 text-2xl font-bold text-foreground sm:text-3xl">
+            The Endless Compliment Machine
+          </h2>
+          <p className="mb-6 text-muted-foreground">
+            Warning: literally will never run out. Trust the process.
+          </p>
+          <div className="rounded-3xl bg-blush/40 p-6 shadow-sm min-h-[120px] flex items-center justify-center">
+            <AnimatePresence mode="wait">
+              <motion.p
+                key={complimentSeed}
+                initial={{ opacity: 0, scale: 0.9, y: 10 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.9, y: -10 }}
+                transition={{ type: "spring", stiffness: 200, damping: 18 }}
+                className="text-lg font-semibold text-foreground"
+              >
+                {currentCompliment}
+              </motion.p>
+            </AnimatePresence>
+          </div>
+          <motion.button
+            onClick={() => {
+              setComplimentSeed((s) => s + 1);
+              setComplimentCount((c) => c + 1);
+            }}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.92 }}
+            className="mt-4 rounded-full bg-coral px-6 py-3 text-sm font-semibold text-white shadow"
+          >
+            Another one 💛
+          </motion.button>
+          <p className="mt-3 text-xs text-muted-foreground">
+            {complimentCount} compliment{complimentCount === 1 ? "" : "s"} delivered. Infinite remaining.
+          </p>
+        </motion.div>
+      </section>
+
+      {/* Cat Bubble Spawner */}
+      <section className="px-4 py-8 sm:py-12">
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="mx-auto max-w-xl"
+        >
+          <h2 className="mb-2 text-center text-2xl font-bold text-foreground sm:text-3xl">
+            Release the cats
+          </h2>
+          <p className="mb-6 text-center text-muted-foreground">
+            Hold, tap, spam. Each click sends a little friend into the wild.
+          </p>
+          <div className="relative h-80 overflow-hidden rounded-3xl bg-gradient-to-b from-peach/30 to-coral/20 shadow-sm">
+            <AnimatePresence>
+              {bubbles.map((b) => (
+                <motion.div
+                  key={b.id}
+                  initial={{ y: 320, opacity: 0, scale: 0.5 }}
+                  animate={{ y: -40, opacity: 1, scale: 1, rotate: (b.id % 2 ? 1 : -1) * 20 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 3.4, ease: "easeOut" }}
+                  className="absolute text-3xl select-none pointer-events-none"
+                  style={{ left: `${b.x}%` }}
+                >
+                  {b.emoji}
+                </motion.div>
+              ))}
+            </AnimatePresence>
+            <div className="absolute inset-x-0 bottom-0 flex flex-col items-center gap-2 p-4">
+              <motion.button
+                onClick={spawnBubble}
+                whileTap={{ scale: 0.9 }}
+                whileHover={{ scale: 1.05 }}
+                className="rounded-full bg-coral px-8 py-4 text-lg font-bold text-white shadow-lg"
+              >
+                🐾 Spawn a cat
+              </motion.button>
+              <p className="text-xs font-semibold text-foreground/70">
+                {bubbleTotal} total cats released into the world
+              </p>
+            </div>
+          </div>
+        </motion.div>
+      </section>
+
+      {/* Magic Meow Ball */}
+      <section className="px-4 py-8 sm:py-12">
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="mx-auto max-w-md"
+        >
+          <h2 className="mb-2 text-center text-2xl font-bold text-foreground sm:text-3xl">
+            The Magic Meow Ball
+          </h2>
+          <p className="mb-6 text-center text-muted-foreground">
+            Ask any question. The cats have all the answers.
+          </p>
+          <div className="rounded-3xl bg-card p-6 shadow-sm">
+            <input
+              value={meowQuestion}
+              onChange={(e) => setMeowQuestion(e.target.value)}
+              onKeyDown={(e) => e.key === "Enter" && askMeowBall()}
+              placeholder="Will I feel better tomorrow?"
+              className="w-full rounded-2xl border border-input bg-background px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-coral"
+            />
+            <motion.button
+              onClick={askMeowBall}
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.95 }}
+              className="mt-3 w-full rounded-2xl bg-coral px-6 py-3 font-semibold text-white shadow"
+            >
+              🎱 Consult the cats
+            </motion.button>
+            <motion.div
+              animate={meowShaking ? { x: [0, -8, 8, -8, 8, 0], rotate: [0, -3, 3, -3, 3, 0] } : {}}
+              transition={{ duration: 0.6 }}
+              className="mt-6 flex min-h-[120px] items-center justify-center rounded-2xl bg-warm/20 p-6 text-center"
+            >
+              <AnimatePresence mode="wait">
+                {meowShaking ? (
+                  <motion.p
+                    key="loading"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="text-lg font-semibold text-muted-foreground"
+                  >
+                    the cats are conferring...
+                  </motion.p>
+                ) : meowAnswer ? (
+                  <motion.p
+                    key={meowAnswer + complimentSeed}
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.8 }}
+                    className="text-lg font-bold text-foreground"
+                  >
+                    {meowAnswer}
+                  </motion.p>
+                ) : (
+                  <motion.p
+                    key="empty"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    className="text-sm text-muted-foreground"
+                  >
+                    Ask something. Anything. The council awaits.
+                  </motion.p>
+                )}
+              </AnimatePresence>
+            </motion.div>
+          </div>
+        </motion.div>
+      </section>
+
 
       {/* Footer */}
       <footer className="px-4 py-12 text-center">
