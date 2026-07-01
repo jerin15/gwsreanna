@@ -95,6 +95,44 @@ const catFactsFake = [
   "Cats can legally vote in 3 countries. None of them are real.",
 ];
 
+const complimentAdjectives = [
+  "unreasonably brilliant", "cosmically kind", "suspiciously talented", "outrageously funny",
+  "chaotically wise", "absurdly capable", "unfairly stylish", "genuinely magical",
+  "wildly loveable", "quietly powerful", "delightfully unhinged", "impossibly cool",
+  "radiantly weird", "criminally underrated", "iconically kind", "supernaturally chill",
+];
+const complimentNouns = [
+  "human", "legend", "vibe", "genius", "sunbeam", "chaos goblin", "menace to sadness",
+  "cryptid", "certified icon", "walking serotonin", "small warm sun", "problem solver",
+  "friend of cats", "storm in a teacup", "living plot twist",
+];
+const complimentClosers = [
+  "and honestly, the world knows it.",
+  "and I will fight anyone who disagrees.",
+  "the data is overwhelming.",
+  "the cats have signed a petition confirming this.",
+  "science cannot explain it.",
+  "sources: everyone with eyes.",
+  "even your immune system agrees, it is just buffering.",
+  "case closed, your honor.",
+];
+
+const meowBallAnswers = [
+  "Meow. (That is a yes.)",
+  "Absolutely, and twice on Sundays.",
+  "The cats say: nap first, decide later.",
+  "Signs point to yes. Also snacks.",
+  "Ask again after tea.",
+  "Hard no. The vibes are off.",
+  "Yes, but only if you smile while doing it.",
+  "The universe says: rest, then conquer.",
+  "Reanna, you already know the answer.",
+  "100 percent. The council of loafs has spoken.",
+  "Try again, this time with more confidence.",
+  "Purrhaps. The stars are still loading.",
+];
+
+
 function CheerUpPage() {
   const [activeCard, setActiveCard] = useState<number | null>(null);
   const [selectedMood, setSelectedMood] = useState<string | null>(null);
