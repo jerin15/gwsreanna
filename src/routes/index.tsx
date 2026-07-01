@@ -63,22 +63,22 @@ const moodResponses: Record<string, MoodResponse> = {
 
 const catPuns = [
   "You have got to be kitten me, Reanna. Get well soon!",
-  "This whole situation is un-fur-tunate. Purrhaps some rest will help.",
-  "You are feline down today, but tomorrow you will be paw-some.",
-  "Stay paw-sitive. You are litter-ally the best.",
-  "Do not let this sickness cat-ch you off guard. You have got claws.",
+  "This whole situation is unfurtunate. Purrhaps some rest will help.",
+  "You are feline down today, but tomorrow you will be pawsome.",
+  "Stay pawsitive. You are litterally the best.",
+  "Do not let this sickness catch you off guard. You have got claws.",
   "I am not kitten around: you are the cat's whiskers.",
-  "Time to paws and recover. The world can meow-nage without you for a day.",
+  "Time to paws and recover. The world can meownage without you for a day.",
   "You are one clever kitty. This bug does not stand a chance.",
 ];
 
 const catJokes = [
-  { q: "What do you call a cat that gets anything it wants?", a: "Purr-suasive." },
+  { q: "What do you call a cat that gets anything it wants?", a: "Purrsuasive." },
   { q: "Why was the cat sitting on the computer?", a: "To keep an eye on the mouse." },
   { q: "What is a cat's favorite dessert?", a: "Chocolate mouse." },
   { q: "How do cats end a fight?", a: "They hiss and make up." },
   { q: "What do cats eat for breakfast?", a: "Mice Krispies." },
-  { q: "Why do cats always get their way?", a: "They are very purr-suasive negotiators." },
+  { q: "Why do cats always get their way?", a: "They are very purrsuasive negotiators." },
 ];
 
 const catFactsSerious = [
