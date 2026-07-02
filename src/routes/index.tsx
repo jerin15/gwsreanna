@@ -164,6 +164,13 @@ function CheerUpPage() {
   const [meowAnswer, setMeowAnswer] = useState<string | null>(null);
   const [meowShaking, setMeowShaking] = useState(false);
   const [moodDial, setMoodDial] = useState(50);
+  const [catNameSeed, setCatNameSeed] = useState(0);
+  const [translatorText, setTranslatorText] = useState("");
+  const [diceRolls, setDiceRolls] = useState<string[]>([]);
+  const [diceRolling, setDiceRolling] = useState(false);
+  const [wheelSpinning, setWheelSpinning] = useState(false);
+  const [wheelResult, setWheelResult] = useState<string | null>(null);
+  const [wheelAngle, setWheelAngle] = useState(0);
 
   const pick = <T,>(arr: T[]) => arr[Math.floor(Math.random() * arr.length)];
   const currentCompliment = (() => {
