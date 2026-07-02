@@ -145,6 +145,39 @@ const moodDialStages: { label: string; message: string; emoji: string; bg: strin
   { label: "Cosmic Cat Overlord", emoji: "🐈‍⬛✨", bg: "from-coral/50 to-fuchsia-300/40", message: "Reanna has ascended. The cats bow. The universe purrs." },
 ];
 
+const catNamePrefixes = ["Sir", "Lady", "Captain", "Duchess", "Professor", "Baron", "Miss", "Lord", "Chief", "Madame", "Dr.", "General"];
+const catNameFirsts = ["Whiskers", "Biscuit", "Noodle", "Mochi", "Pickle", "Waffle", "Sushi", "Muffin", "Pumpkin", "Toast", "Peanut", "Dumpling", "Bagel", "Pancake"];
+const catNameLasts = ["McFluffington", "Von Purr", "the Third", "of the Blanket Realm", "McSnoozerson", "the Magnificent", "the Absolutely Unhinged", "the Great", "the Cozy", "Longwhiskers"];
+
+const catDiceFaces = ["🐱 nap", "🐟 snack", "😹 zoomies", "🧶 chaos", "☀️ sunbeam", "📦 box"];
+
+const wheelActivities = [
+  "Watch a comfort movie",
+  "Text a friend a bad pun",
+  "Drink an entire glass of water",
+  "Take a 20 minute nap",
+  "Wrap yourself in a blanket burrito",
+  "Look at photos of baby animals",
+  "Sing loudly to one song",
+  "Do exactly zero productive things",
+];
+
+function toCatSpeak(text: string): string {
+  if (!text.trim()) return "";
+  const words = text.trim().split(/\s+/);
+  return words
+    .map((w, i) => {
+      const len = Math.max(1, Math.min(6, w.length));
+      const base = ["mew", "meow", "purr", "mrrp", "nya", "prr"][i % 6];
+      const suffix = "o".repeat(Math.max(0, len - 3));
+      const punct = /[.!?,]$/.test(w) ? w.slice(-1) : "";
+      return base + suffix + punct;
+    })
+    .join(" ");
+}
+
+
+
 function CheerUpPage() {
   const [activeCard, setActiveCard] = useState<number | null>(null);
   const [selectedMood, setSelectedMood] = useState<string | null>(null);
