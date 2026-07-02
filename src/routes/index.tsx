@@ -859,13 +859,6 @@ function CheerUpPage() {
       </section>
 
 
-      {/* Footer */}
-      <footer className="px-4 py-12 text-center">
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-        >
 
 
       {/* Never-ending Mood Dial */}
