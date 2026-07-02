@@ -132,6 +132,18 @@ const meowBallAnswers = [
   "Purrhaps. The stars are still loading.",
 ];
 
+const moodDialStages: { label: string; message: string; emoji: string; bg: string }[] = [
+  { label: "Full Goblin Mode", emoji: "😾", bg: "from-slate-400/40 to-slate-600/30", message: "Reanna is feral. Do not approach without snacks." },
+  { label: "Grumpy Loaf", emoji: "🙀", bg: "from-indigo-300/40 to-slate-400/30", message: "Reanna has become bread. Angry bread. Respect the loaf." },
+  { label: "Tired Kitten", emoji: "😿", bg: "from-blue-200/40 to-indigo-300/30", message: "Reanna would like the sun to keep it down, please." },
+  { label: "Meh Meow", emoji: "😼", bg: "from-purple-200/40 to-pink-200/30", message: "Reanna is functioning. Barely. Bravely." },
+  { label: "Cozy Curl", emoji: "🐱", bg: "from-pink-200/50 to-peach/40", message: "Reanna is a warm little swirl of blanket and vibes." },
+  { label: "Purr Machine", emoji: "😽", bg: "from-peach/50 to-coral/30", message: "Reanna is vibrating at a frequency known to heal souls." },
+  { label: "Playful Zoomie", emoji: "😸", bg: "from-yellow-200/50 to-peach/50", message: "Reanna just knocked something off a shelf and felt joy." },
+  { label: "Happy Cat", emoji: "😺", bg: "from-yellow-200/60 to-coral/40", message: "Reanna is smiling and it is illegal how contagious it is." },
+  { label: "Sun Beam Bliss", emoji: "😻", bg: "from-orange-200/60 to-yellow-200/50", message: "Reanna has found the one warm sunbeam. Nothing else matters." },
+  { label: "Cosmic Cat Overlord", emoji: "🐈‍⬛✨", bg: "from-coral/50 to-fuchsia-300/40", message: "Reanna has ascended. The cats bow. The universe purrs." },
+];
 
 function CheerUpPage() {
   const [activeCard, setActiveCard] = useState<number | null>(null);
@@ -151,6 +163,7 @@ function CheerUpPage() {
   const [meowQuestion, setMeowQuestion] = useState("");
   const [meowAnswer, setMeowAnswer] = useState<string | null>(null);
   const [meowShaking, setMeowShaking] = useState(false);
+  const [moodDial, setMoodDial] = useState(50);
 
   const pick = <T,>(arr: T[]) => arr[Math.floor(Math.random() * arr.length)];
   const currentCompliment = (() => {
@@ -845,6 +858,84 @@ function CheerUpPage() {
         </motion.div>
       </section>
 
+
+
+
+      {/* Never-ending Mood Dial */}
+      <section className="px-4 py-8 sm:py-12">
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="mx-auto max-w-xl"
+        >
+          <h2 className="mb-2 text-center text-2xl font-bold text-foreground sm:text-3xl">
+            The Never Ending Mood Dial
+          </h2>
+          <p className="mb-6 text-center text-muted-foreground">
+            Drag it. Reanna's cat mood shifts in real time.
+          </p>
+          {(() => {
+            const stage = moodDialStages[Math.min(
+              moodDialStages.length - 1,
+              Math.floor((moodDial / 100) * moodDialStages.length),
+            )];
+            const rotate = (moodDial - 50) * 0.9;
+            const scale = 0.85 + (moodDial / 100) * 0.5;
+            const hue = Math.round((moodDial - 50) * 1.6);
+            const wobble = 0.4 + (moodDial / 100) * 1.6;
+            return (
+              <div className={`relative overflow-hidden rounded-3xl bg-gradient-to-br ${stage.bg} p-6 shadow-sm transition-colors duration-500`}>
+                <div className="flex flex-col items-center gap-4 text-center">
+                  <motion.div
+                    key={stage.label}
+                    initial={{ opacity: 0, y: -6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="text-xs font-bold uppercase tracking-wider text-foreground/70"
+                  >
+                    {stage.label}
+                  </motion.div>
+                  <motion.div
+                    className="text-6xl select-none"
+                    animate={{ rotate: [rotate - 4, rotate + 4, rotate - 4], scale }}
+                    transition={{ rotate: { repeat: Infinity, duration: wobble, ease: "easeInOut" }, scale: { type: "spring", stiffness: 200, damping: 15 } }}
+                    style={{ filter: `hue-rotate(${hue}deg)` }}
+                  >
+                    {stage.emoji}
+                  </motion.div>
+                  <AnimatePresence mode="wait">
+                    <motion.p
+                      key={stage.message}
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -8 }}
+                      className="min-h-[3rem] text-lg font-semibold text-foreground"
+                    >
+                      {stage.message}
+                    </motion.p>
+                  </AnimatePresence>
+                  <div className="w-full">
+                    <input
+                      type="range"
+                      min={0}
+                      max={100}
+                      value={moodDial}
+                      onChange={(e) => setMoodDial(Number(e.target.value))}
+                      aria-label="Reanna mood dial"
+                      className="w-full accent-coral"
+                    />
+                    <div className="mt-1 flex justify-between text-xs font-semibold text-foreground/60">
+                      <span>Goblin</span>
+                      <span className="text-coral">{moodDial}%</span>
+                      <span>Overlord</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            );
+          })()}
+        </motion.div>
+      </section>
 
       {/* Footer */}
       <footer className="px-4 py-12 text-center">
