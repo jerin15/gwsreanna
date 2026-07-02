@@ -866,6 +866,91 @@ function CheerUpPage() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
         >
+
+
+      {/* Never-ending Mood Dial */}
+      <section className="px-4 py-8 sm:py-12">
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="mx-auto max-w-xl"
+        >
+          <h2 className="mb-2 text-center text-2xl font-bold text-foreground sm:text-3xl">
+            The Never Ending Mood Dial
+          </h2>
+          <p className="mb-6 text-center text-muted-foreground">
+            Drag it. Reanna's cat mood shifts in real time.
+          </p>
+          {(() => {
+            const stage = moodDialStages[Math.min(
+              moodDialStages.length - 1,
+              Math.floor((moodDial / 100) * moodDialStages.length),
+            )];
+            const rotate = (moodDial - 50) * 0.9;
+            const scale = 0.85 + (moodDial / 100) * 0.5;
+            const hue = Math.round((moodDial - 50) * 1.6);
+            const wobble = 0.4 + (moodDial / 100) * 1.6;
+            return (
+              <div className={`relative overflow-hidden rounded-3xl bg-gradient-to-br ${stage.bg} p-6 shadow-sm transition-colors duration-500`}>
+                <div className="flex flex-col items-center gap-4 text-center">
+                  <motion.div
+                    key={stage.label}
+                    initial={{ opacity: 0, y: -6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="text-xs font-bold uppercase tracking-wider text-foreground/70"
+                  >
+                    {stage.label}
+                  </motion.div>
+                  <motion.div
+                    className="text-6xl select-none"
+                    animate={{ rotate: [rotate - 4, rotate + 4, rotate - 4], scale }}
+                    transition={{ rotate: { repeat: Infinity, duration: wobble, ease: "easeInOut" }, scale: { type: "spring", stiffness: 200, damping: 15 } }}
+                    style={{ filter: `hue-rotate(${hue}deg)` }}
+                  >
+                    {stage.emoji}
+                  </motion.div>
+                  <AnimatePresence mode="wait">
+                    <motion.p
+                      key={stage.message}
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -8 }}
+                      className="min-h-[3rem] text-lg font-semibold text-foreground"
+                    >
+                      {stage.message}
+                    </motion.p>
+                  </AnimatePresence>
+                  <div className="w-full">
+                    <input
+                      type="range"
+                      min={0}
+                      max={100}
+                      value={moodDial}
+                      onChange={(e) => setMoodDial(Number(e.target.value))}
+                      aria-label="Reanna mood dial"
+                      className="w-full accent-coral"
+                    />
+                    <div className="mt-1 flex justify-between text-xs font-semibold text-foreground/60">
+                      <span>Goblin</span>
+                      <span className="text-coral">{moodDial}%</span>
+                      <span>Overlord</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            );
+          })()}
+        </motion.div>
+      </section>
+
+      {/* Footer */}
+      <footer className="px-4 py-12 text-center">
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+        >
           <p className="text-lg font-semibold text-foreground">
             Get well soon, <span className="text-coral">Reanna</span>, you incredible human 🧡
           </p>
