@@ -977,7 +977,195 @@ function CheerUpPage() {
         </motion.div>
       </section>
 
+      {/* Cat Name Generator */}
+      <section className="px-4 py-8 sm:py-12">
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="mx-auto max-w-xl text-center"
+        >
+          <h2 className="mb-2 text-2xl font-bold text-foreground sm:text-3xl">
+            Reanna's Emergency Cat Name Generator
+          </h2>
+          <p className="mb-6 text-muted-foreground">
+            For the cat you will inevitably adopt during recovery.
+          </p>
+          <div className="rounded-3xl bg-blush/60 p-6 shadow-sm">
+            {(() => {
+              void catNameSeed;
+              const name = `${pick(catNamePrefixes)} ${pick(catNameFirsts)} ${pick(catNameLasts)}`;
+              return (
+                <AnimatePresence mode="wait">
+                  <motion.p
+                    key={catNameSeed}
+                    initial={{ opacity: 0, y: 10, rotate: -3 }}
+                    animate={{ opacity: 1, y: 0, rotate: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    className="text-2xl font-bold text-foreground"
+                  >
+                    {name}
+                  </motion.p>
+                </AnimatePresence>
+              );
+            })()}
+          </div>
+          <motion.button
+            onClick={() => setCatNameSeed((s) => s + 1)}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="mt-4 rounded-full bg-coral px-6 py-3 text-sm font-semibold text-white shadow"
+          >
+            Generate another 🐾
+          </motion.button>
+        </motion.div>
+      </section>
+
+      {/* Cat Translator */}
+      <section className="px-4 py-8 sm:py-12">
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="mx-auto max-w-xl"
+        >
+          <h2 className="mb-2 text-center text-2xl font-bold text-foreground sm:text-3xl">
+            Human to Cat Translator
+          </h2>
+          <p className="mb-6 text-center text-muted-foreground">
+            Type anything. Get the cat interpretation.
+          </p>
+          <div className="rounded-3xl bg-card p-6 shadow-sm">
+            <textarea
+              value={translatorText}
+              onChange={(e) => setTranslatorText(e.target.value)}
+              placeholder="Type something for Reanna's inner cat to say..."
+              rows={3}
+              className="w-full resize-none rounded-2xl border border-border bg-background p-3 text-sm text-foreground outline-none focus:ring-2 focus:ring-coral"
+            />
+            <div className="mt-4 rounded-2xl bg-peach/40 p-4 text-center min-h-[3rem]">
+              <AnimatePresence mode="wait">
+                <motion.p
+                  key={translatorText}
+                  initial={{ opacity: 0, y: 6 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -6 }}
+                  className="text-lg font-bold text-foreground"
+                >
+                  {translatorText.trim() ? toCatSpeak(translatorText) : "meow? (waiting for input)"}
+                </motion.p>
+              </AnimatePresence>
+            </div>
+          </div>
+        </motion.div>
+      </section>
+
+      {/* Cat Dice */}
+      <section className="px-4 py-8 sm:py-12">
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="mx-auto max-w-xl text-center"
+        >
+          <h2 className="mb-2 text-2xl font-bold text-foreground sm:text-3xl">
+            Roll the Cat Dice
+          </h2>
+          <p className="mb-6 text-muted-foreground">
+            Three dice. They decide your next 30 seconds.
+          </p>
+          <div className="flex justify-center gap-3">
+            {[0, 1, 2].map((i) => (
+              <motion.div
+                key={i}
+                animate={diceRolling ? { rotate: [0, 360, 720], y: [0, -20, 0] } : {}}
+                transition={{ duration: 0.6 }}
+                className="flex h-24 w-24 items-center justify-center rounded-2xl bg-card p-2 text-center text-xs font-bold text-foreground shadow-sm sm:h-28 sm:w-28 sm:text-sm"
+              >
+                {diceRolls[i] ?? "🎲"}
+              </motion.div>
+            ))}
+          </div>
+          <motion.button
+            onClick={() => {
+              setDiceRolling(true);
+              setTimeout(() => {
+                setDiceRolls([pick(catDiceFaces), pick(catDiceFaces), pick(catDiceFaces)]);
+                setDiceRolling(false);
+              }, 600);
+            }}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="mt-6 rounded-full bg-coral px-6 py-3 text-sm font-semibold text-white shadow"
+          >
+            Roll the dice 🎲
+          </motion.button>
+        </motion.div>
+      </section>
+
+      {/* Wheel of Cozy Activities */}
+      <section className="px-4 py-8 sm:py-12">
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="mx-auto max-w-xl text-center"
+        >
+          <h2 className="mb-2 text-2xl font-bold text-foreground sm:text-3xl">
+            Wheel of What Reanna Should Do Next
+          </h2>
+          <p className="mb-6 text-muted-foreground">
+            Spin it. The wheel is legally binding.
+          </p>
+          <div className="relative mx-auto h-56 w-56">
+            <div className="absolute left-1/2 top-0 z-10 -translate-x-1/2 text-3xl">🔻</div>
+            <motion.div
+              className="h-full w-full rounded-full border-4 border-coral bg-gradient-conic shadow-inner"
+              style={{
+                background: `conic-gradient(#ff7a6b 0deg 45deg, #ffb088 45deg 90deg, #f4c2c2 90deg 135deg, #ffd700 135deg 180deg, #ff6b9d 180deg 225deg, #ffb088 225deg 270deg, #ff7a6b 270deg 315deg, #f4c2c2 315deg 360deg)`,
+              }}
+              animate={{ rotate: wheelAngle }}
+              transition={{ duration: 2.5, ease: "easeOut" }}
+            />
+          </div>
+          <motion.button
+            onClick={() => {
+              if (wheelSpinning) return;
+              setWheelSpinning(true);
+              setWheelResult(null);
+              const pickIdx = Math.floor(Math.random() * wheelActivities.length);
+              const target = wheelAngle + 360 * 5 + (360 - pickIdx * 45 - 22.5);
+              setWheelAngle(target);
+              setTimeout(() => {
+                setWheelResult(wheelActivities[pickIdx]);
+                setWheelSpinning(false);
+              }, 2600);
+            }}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="mt-6 rounded-full bg-coral px-6 py-3 text-sm font-semibold text-white shadow disabled:opacity-60"
+            disabled={wheelSpinning}
+          >
+            {wheelSpinning ? "Spinning..." : "Spin the wheel 🌀"}
+          </motion.button>
+          <AnimatePresence mode="wait">
+            {wheelResult && (
+              <motion.p
+                key={wheelResult}
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0 }}
+                className="mt-4 text-lg font-bold text-coral"
+              >
+                → {wheelResult}
+              </motion.p>
+            )}
+          </AnimatePresence>
+        </motion.div>
+      </section>
+
       {/* Footer */}
+
       <footer className="px-4 py-12 text-center">
         <motion.div
           initial={{ opacity: 0 }}
