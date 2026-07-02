@@ -151,6 +151,7 @@ function CheerUpPage() {
   const [meowQuestion, setMeowQuestion] = useState("");
   const [meowAnswer, setMeowAnswer] = useState<string | null>(null);
   const [meowShaking, setMeowShaking] = useState(false);
+  const [moodDial, setMoodDial] = useState(50);
 
   const pick = <T,>(arr: T[]) => arr[Math.floor(Math.random() * arr.length)];
   const currentCompliment = (() => {
