@@ -132,6 +132,18 @@ const meowBallAnswers = [
   "Purrhaps. The stars are still loading.",
 ];
 
+const moodDialStages: { label: string; message: string; emoji: string; bg: string }[] = [
+  { label: "Full Goblin Mode", emoji: "😾", bg: "from-slate-400/40 to-slate-600/30", message: "Reanna is feral. Do not approach without snacks." },
+  { label: "Grumpy Loaf", emoji: "🙀", bg: "from-indigo-300/40 to-slate-400/30", message: "Reanna has become bread. Angry bread. Respect the loaf." },
+  { label: "Tired Kitten", emoji: "😿", bg: "from-blue-200/40 to-indigo-300/30", message: "Reanna would like the sun to keep it down, please." },
+  { label: "Meh Meow", emoji: "😼", bg: "from-purple-200/40 to-pink-200/30", message: "Reanna is functioning. Barely. Bravely." },
+  { label: "Cozy Curl", emoji: "🐱", bg: "from-pink-200/50 to-peach/40", message: "Reanna is a warm little swirl of blanket and vibes." },
+  { label: "Purr Machine", emoji: "😽", bg: "from-peach/50 to-coral/30", message: "Reanna is vibrating at a frequency known to heal souls." },
+  { label: "Playful Zoomie", emoji: "😸", bg: "from-yellow-200/50 to-peach/50", message: "Reanna just knocked something off a shelf and felt joy." },
+  { label: "Happy Cat", emoji: "😺", bg: "from-yellow-200/60 to-coral/40", message: "Reanna is smiling and it is illegal how contagious it is." },
+  { label: "Sun Beam Bliss", emoji: "😻", bg: "from-orange-200/60 to-yellow-200/50", message: "Reanna has found the one warm sunbeam. Nothing else matters." },
+  { label: "Cosmic Cat Overlord", emoji: "🐈‍⬛✨", bg: "from-coral/50 to-fuchsia-300/40", message: "Reanna has ascended. The cats bow. The universe purrs." },
+];
 
 function CheerUpPage() {
   const [activeCard, setActiveCard] = useState<number | null>(null);
